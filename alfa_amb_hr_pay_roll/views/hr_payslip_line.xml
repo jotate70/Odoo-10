@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+        <record id="alfa_amb_hr_payslip_line_filter" model="ir.ui.view">
+            <field name="name">alfa.amb.hr.payslip.line.filter</field>
+            <field name="model">hr.payslip.line</field>
+            <field name="arch" type="xml">
+                <search string="Líneas de nómina">
+                    <field name="name" string="Nombre línea" filter_domain="[('name','ilike',self)]"/>
+                    <field name="code" string="Código línea" filter_domain="[('code','ilike',self)]"/>
+                    <field name="slip_id" string="Nómina" filter_domain="[('slip_id','ilike',self)]"/>
+                    <field name="salary_rule_id" string="Regla" filter_domain="[('salary_rule_id','ilike',self)]"/>
+                    <field name="number_payslip" 
+                        string="Referencia nómina" 
+                        filter_domain="[('number_payslip','ilike',self)]"/>
+                    <field name="payslip_run_id" string="Lotes de nómina" filter_domain="[('payslip_run_id','ilike',self)]"/>
+                    <separator/>
+                    <filter string="Con Valor" name = 'with_value' domain="[('amount','>',0)]"/>
+                    <filter string="Sin Valor" name = 'without_value' domain="[('amount','=',0)]"/>
+                    <separator/>
+                    <filter string="Suma en nómina" name = 'sum_on_payslip' domain="[('sum_on_payroll','=',True)]"/>
+                    <separator/>
+                    <filter string="Nómina confirmada" name = 'payslip_done' domain="[('state','=','done')]"/>
+                    <separator/>
+                    <filter string="Este mes" 
+                        name="this_month_hr_paslip_line" 
+                        domain="[('date_to','&lt;=',(context_today()+relativedelta(day=31)).strftime('%%Y-%%m-%%d')),('date_from','&gt;=',(context_today()-relativedelta(day=1)).strftime('%%Y-%%m-%%d'))]" help="Líneas de este mes" />
+
+                    <filter string="Ultimo mes" 
+                        name="last_month_hr_paslip_line" 
+                        domain="[('date_from','&gt;=',(context_today()-relativedelta(months=1)).strftime('%%Y-%%m-01')),('date_to','&lt;',time.strftime('%%Y-%%m-01'))]" help="Líneas del ultimo mes"/>
+                    
+                    <filter name="first_quarterly_hr_paslip_line" 
+                        string="Primer Trimestre" 
+                        domain="[('date_to','&lt;=', time.strftime('%%Y-03-31')),('date_from','&gt;=',time.strftime('%%Y-01-01'))]"/>
+ 
+                    <filter name="second_quarterly_hr_paslip_line"
+                        string="Segundo Trimestre"
+                        domain="[('date_to','&lt;=', time.strftime('%%Y-06-30')),('date_from','&gt;=',time.strftime('%%Y-04-01'))]"/>
+ 
+                    <filter name="thirth_quarterly_hr_paslip_line" 
+                        string="Tercer trimestre" 
+                        domain="[('date_to','&lt;=', time.strftime('%%Y-09-30')),('date_from','&gt;=',time.strftime('%%Y-07-01'))]"/>    
+ 
+                    <filter name="fourth_quarterly_hr_paslip_line" 
+                        string="Cuatro Trimestre" 
+                        domain="[('date_to','&lt;=', time.strftime('%%Y-12-31')),('date_from','&gt;=',time.strftime('%%Y-10-01'))]"/>
+ 
+                    <filter string="Año pasado" 
+                        name="last_year_hr_paslip_line" 
+                        domain="[('date_from','&gt;=',(context_today()-relativedelta(years=1)).strftime('%%Y-01-01')),('date_to','&lt;',time.strftime('%%Y-01-01'))]" help="Líneas año pasado" />
+ 
+                    <filter string="Este año" 
+                        name="this_year_hr_paslip_line" 
+                        domain="[('date_to','&lt;=', time.strftime('%%Y-12-31')),('date_from','&gt;=',time.strftime('%%Y-01-01'))]" help="Líneas de este año" />
+ 
+                    <separator/>
+                    <field name="employee_id"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Nómina" name='slip_id' domain="[]" context="{'group_by':'slip_id'}"/>
+                        <filter string="Lotes de nómina" name='payslip_run_id' domain="[]" context="{'group_by':'payslip_run_id'}"/>
+                        <filter string="Regla Salarial" name='salary_rule_id' domain="[]" context="{'group_by':'salary_rule_id'}"/>
+                        <filter string="Empleado" name='employee_id' domain="[]" context="{'group_by':'employee_id'}"/>
+                        <filter string="Contrato" name = 'contract_id' domain="[]" context="{'group_by':'contract_id'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+        <record id="alfa_amb_hr_payslip_line_form" model="ir.ui.view">
+            <field name="name">alfa.amb.hr.payslip.line.form</field>
+            <field name="model">hr.payslip.line</field>
+            <field name="arch" type="xml">
+                <form string="Línea de Nómina" create = "false" edit = "false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="category_id"/>
+                                <field name='slip_id'/>
+                            </group>
+                            <group>
+                                <field name='salary_rule_id'/>
+                                <field name='employee_id'/>
+                                <field name='contract_id'/>
+                                <field name="amount" />
+                                <field name="total" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+		<record id="alfa_amb_hr_payslip_line_tree" model="ir.ui.view">
+			<field name="name">alfa.amb.hr.payslip.line.tree</field>
+			<field name="model">hr.payslip.line</field>
+			<field name="arch" type="xml">
+				<tree string="Líneas de Nómina" create = "false" edit = "false">
+                    <field name="sum_on_payroll" invisible = '1'/>
+                    <field name="payslip_run_id" invisible='1' />
+                    <field name="number_payslip"/>
+                    <field name='slip_id'/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="category_id"/>
+                    <field name="quantity"/>
+                    <field name="rate"/>
+                    <field name="salary_rule_id"/>
+                    <field name='employee_id'/>
+                    <field name='contract_id'/>
+                    <field name="amount" sum ='total'/>
+                    <field name="total" sum ='total'/>
+				</tree>
+			</field>
+        </record>
+
+        <record id="alfa_amb_hr_payslip_line_pivot" model="ir.ui.view">
+            <field name="name">alfa.amb.hr.payslip.line.pivot</field>
+            <field name="model">hr.payslip.line</field>
+            <field name="arch" type="xml">
+                <pivot string="Líneas de Nómina">
+                    <field name="slip_id" type="row"/>
+                    <field name="amount" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+
+		<record id="action_alfa_amb_hr_payslip_line" model="ir.actions.act_window">
+			<field name="name">Líneas de Nómina</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.payslip.line</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,pivot,search</field>
+            <field name="context">{'search_default_with_value': True}</field>
+			<field name="view_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_payslip_line_tree"/>
+			<field name="search_view_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_payslip_line_filter"/>
+		</record>
+	</data>
+</odoo>

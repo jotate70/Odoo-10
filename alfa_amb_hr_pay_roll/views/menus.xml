@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<menuitem 
+                  name ='Tipos de Riesgos'
+                  action="alfa_amb_hr_pay_roll.action_alfa_amb_risk_classes" 
+                  id="menu_alfa_amb_risk_classes" 
+                  parent="hr.menu_human_resources_configuration"  
+                  sequence="100"/>
+
+		<menuitem 
+                  name ='Conf. Parametros globales'
+                  action="alfa_amb_hr_pay_roll.action_alfa_amb_hr_pay_roll_config_settings" 
+                  id="menu_alfa_amb_hr_pay_roll_config_settings" 
+                  parent="hr.menu_human_resources_configuration"  
+                  sequence="0"/>
+
+
+		<menuitem 
+                  name ='Novedades'
+                  id="menu_hr_alfa_amb_hr_novelty_root" 
+                  parent="hr.menu_hr_root"
+                  groups="hr.group_hr_manager,hr.group_hr_user" 
+                  sequence="25"/>
+
+		<menuitem 
+                  name ='Novedades'
+                  action="alfa_amb_hr_pay_roll.action_alfa_amb_hr_novelty" 
+                  id="menu_hr_alfa_amb_hr_novelty" 
+                  parent="menu_hr_alfa_amb_hr_novelty_root"  
+                  sequence="1"/>
+
+		<menuitem 
+                  name ='Novedades Retención a la fuente'
+                  action="alfa_amb_hr_pay_roll.action_alfa_amb_hr_novelty_retefuente" 
+                  id="menu_hr_alfa_amb_hr_novelty_retefuente" 
+                  parent="menu_hr_alfa_amb_hr_novelty_root"  
+                  sequence="2"/>
+
+
+		<menuitem 
+                  name ='Novedades'
+                  id="menu_hr_payroll_alfa_amb_hr_novelty_root" 
+                  parent="hr_payroll.menu_hr_payroll_root"
+                  groups="hr_payroll.group_hr_payroll_manager,hr_payroll.group_hr_payroll_user"
+                  sequence="25"/>
+
+
+		<menuitem 
+                  name ='Novedades'
+                  action="alfa_amb_hr_pay_roll.action_alfa_amb_hr_novelty" 
+                  id="menu_hr_payroll_alfa_amb_hr_novelty" 
+                  parent="menu_hr_payroll_alfa_amb_hr_novelty_root"  
+                  sequence="1"/>
+
+		<menuitem 
+                  name ='Novedades Retención a la fuente'
+                  action="alfa_amb_hr_pay_roll.action_alfa_amb_hr_novelty_retefuente" 
+                  id="menu_hr_payroll_alfa_amb_hr_novelty_retefuente" 
+                  parent="menu_hr_payroll_alfa_amb_hr_novelty_root"  
+                  sequence="2"/>
+
+
+		<menuitem 
+                  name ='Líneas de nómina'
+                  action="alfa_amb_hr_pay_roll.action_alfa_amb_hr_payslip_line" 
+                  id="menu_alfa_amb_hr_payslip_line" 
+                  parent="hr_payroll.menu_hr_payroll_root"  
+                  sequence="25"/>
+
+        <record id="hr_payroll.menu_hr_payslip_run" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('hr_payroll.group_hr_payroll_user')),(4,ref('hr_payroll.group_hr_payroll_manager'))]"/>
+        </record>
+
+	</data>
+</odoo>

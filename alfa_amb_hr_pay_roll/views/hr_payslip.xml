@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="alfa_amb_hr_payslip_view_form" model="ir.ui.view">
+            <field name="name">alfa.amb.hr.payslip.view.form</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='note']" position="replace"/>
+
+                <xpath expr="//button[@name='action_payslip_done']" position="attributes">
+                    <attribute name="groups">hr_payroll.group_hr_payroll_manager</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='refund_sheet']" position="attributes">
+                    <attribute name="groups">hr_payroll.group_hr_payroll_manager</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_payslip_draft']" position="attributes">
+                    <attribute name="groups">hr_payroll.group_hr_payroll_manager</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='compute_sheet']" position="attributes">
+                    <attribute name="groups">hr_payroll.group_hr_payroll_manager</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_payslip_cancel']" position="attributes">
+                    <attribute name="groups">hr_payroll.group_hr_payroll_manager</attribute>
+                    <attribute name="states">hr_check,confirm,verify,done</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_payslip_cancel']" position="after">
+                    <button string="Actualizar Novedades" 
+                        name="update_news" 
+                        type="object"
+                        class="oe_highlight"
+                        states="draft"/>
+                </xpath>
+
+                <xpath expr="//field[@name='credit_note']" position="after">
+                    <field name="base_salary"/>
+                    <field name="payroll_days"/>
+                    <field name="net_to_pay"/>
+                    <field name="total_cost"/>
+                    <newline/>
+                    <newline/>
+                    <div colspan="4">
+                        <field name="note" placeholder="Agregar una nota..."/>
+                    </div>
+                </xpath>
+
+				<xpath expr="//field[@name='input_line_ids']//tree//field[@name='name']" position="before">
+                    <field name="state_payslip" invisible = '1'/>
+				</xpath>
+
+				<xpath expr="//field[@name='input_line_ids']//tree//field[@name='name']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state_payslip', '!=', 'draft')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='input_line_ids']//tree//field[@name='code']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state_payslip', '!=', 'draft')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='input_line_ids']//tree//field[@name='sequence']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state_payslip', '!=', 'draft')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='input_line_ids']//tree//field[@name='amount']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state_payslip', '!=', 'draft')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='input_line_ids']//tree//field[@name='contract_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state_payslip', '!=', 'draft')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='input_line_ids']//tree//field[@name='amount']" position="after">
+                    <field name="note"/>
+                    <field name="show_on_report"/>
+                    <field name="is_monetary" invisible='1'/>
+				</xpath>
+
+				<xpath expr="//field[@name='line_ids']//tree//field[@name='total']" position="after">
+                    <field name="is_monetary" invisible='1'/>
+				</xpath>
+
+           </field>
+        </record>
+
+        <record id="alfa_amb_hr_payslip_view_tree" model="ir.ui.view">
+            <field name="name">alfa.amb.hr.payslip.view.tree</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="base_salary" sum ='total'/>
+                    <field name="payroll_days" sum ='total'/>
+                    <field name="net_to_pay" sum ='total'/>
+                    <field name="total_cost" sum ='total'/>
+                </xpath>
+           </field>
+        </record>
+
+    </data>
+</odoo>

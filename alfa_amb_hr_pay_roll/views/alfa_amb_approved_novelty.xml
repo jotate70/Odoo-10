@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record model="ir.actions.server" id="approved_novelty">
+		<field name="name">Aprobar Novedad</field>
+		<field name="model_id" ref="alfa_amb_hr_pay_roll.model_hr_novelty"/>
+		<field name="sequence">100</field>
+		<field name="code">
+noveltys = env['hr.novelty']
+for item in records:
+
+    if item.state in ('draft', 'verify'):
+        noveltys += item
+		
+action = item.approved_novelty(noveltys)
+		</field>
+	</record>
+
+	<record model="ir.values" id="ir_value_approved_novelty">
+		<field name="model_id" ref="alfa_amb_hr_pay_roll.model_hr_novelty"/>
+		<field name="name">Aprobar Novedad</field>
+		<field name="key2">client_action_multi</field>
+		<field name="value" eval="'ir.actions.server,' +str(ref('approved_novelty'))"/>
+		<field name="key">action</field>
+		<field name="model">hr.novelty</field>
+	</record>
+
+</odoo>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+        <record id="alfa_amb_hr_novelty_retefuente_filter" model="ir.ui.view">
+            <field name="name">alfa.amb.hr.novelty.retefuente.filter</field>
+            <field name="model">hr.novelty</field>
+            <field name="arch" type="xml">
+                <search string="Novedades Retención a la Fuente">
+                    <field name="employee_id"/>
+                    <separator/>
+                    <filter string="Este mes" 
+                        name="this_month_hr_paslip_line" 
+                        domain="[('date_to','&lt;=',(context_today()+relativedelta(day=31)).strftime('%%Y-%%m-%%d')),('date_from','&gt;=',(context_today()-relativedelta(day=1)).strftime('%%Y-%%m-%%d'))]" help="Líneas de este mes" />
+
+                    <filter string="Ultimo mes" 
+                        name="last_month_hr_paslip_line" 
+                        domain="[('date_from','&gt;=',(context_today()-relativedelta(months=1)).strftime('%%Y-%%m-01')),('date_to','&lt;',time.strftime('%%Y-%%m-01'))]" help="Líneas del ultimo mes"/>
+                    
+                    <filter name="first_quarterly_hr_paslip_line" 
+                        string="Primer Trimestre" 
+                        domain="[('date_to','&lt;=', time.strftime('%%Y-03-31')),('date_from','&gt;=',time.strftime('%%Y-01-01'))]"/>
+ 
+                    <filter name="second_quarterly_hr_paslip_line"
+                        string="Segundo Trimestre"
+                        domain="[('date_to','&lt;=', time.strftime('%%Y-06-30')),('date_from','&gt;=',time.strftime('%%Y-04-01'))]"/>
+ 
+                    <filter name="thirth_quarterly_hr_paslip_line" 
+                        string="Tercer trimestre" 
+                        domain="[('date_to','&lt;=', time.strftime('%%Y-09-30')),('date_from','&gt;=',time.strftime('%%Y-07-01'))]"/>    
+ 
+                    <filter name="fourth_quarterly_hr_paslip_line" 
+                        string="Cuatro Trimestre" 
+                        domain="[('date_to','&lt;=', time.strftime('%%Y-12-31')),('date_from','&gt;=',time.strftime('%%Y-10-01'))]"/>
+ 
+                    <filter string="Año pasado" 
+                        name="last_year_hr_paslip_line" 
+                        domain="[('date_from','&gt;=',(context_today()-relativedelta(years=1)).strftime('%%Y-01-01')),('date_to','&lt;',time.strftime('%%Y-01-01'))]" help="Líneas año pasado" />
+ 
+                    <filter string="Este año" 
+                        name="this_year_hr_paslip_line" 
+                        domain="[('date_to','&lt;=', time.strftime('%%Y-12-31')),('date_from','&gt;=',time.strftime('%%Y-01-01'))]" help="Líneas de este año" />
+                    <separator/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Empleado" domain="[]" context="{'group_by':'employee_id'}"/>
+                        <filter string="Estado" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Input" domain="[]" context="{'group_by':'input_id'}"/>
+                        <filter string="Contrato" domain="[]" context="{'group_by':'contract_id'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+        <record id="alfa_amb_hr_novelty_retefuente_form" model="ir.ui.view">
+            <field name="name">alfa.amb.hr.novelty.retefuente.form</field>
+            <field name="model">hr.novelty</field>
+            <field name="arch" type="xml">
+                <form string="Novedad Retención a la Fuente">
+                    <header>
+                        <button string="Enviar a borrador"
+                            name="send_draft" 
+                            type="object" 
+                            states="cancel" 
+                            class="oe_highlight"/>                   
+
+                        <button string="Enviar aprobación"
+                            name="send_approval" 
+                            type="object" 
+                            states="draft" 
+                            class="oe_highlight"/>
+
+                        <button string="Aprobar" 
+                            name="approve" 
+                            states="verify" 
+                            type='object'
+                            groups="hr_payroll.group_hr_payroll_manager,hr.group_hr_manager"
+                            class="oe_highlight"/>
+
+                        <button string="Cancelar" 
+                            name="cancel" 
+                            states="draft,verify,approved" 
+                            type='object'
+                            groups="hr_payroll.group_hr_payroll_manager,hr.group_hr_manager"
+                            class="oe_highlight"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,verify,approved,cancel"/>
+                    </header>
+                    <sheet>
+                        <field name="contract_id" invisible='1'/>
+                        <field name="struct_id" invisible='1'/>
+                        <div class="oe_title">
+                            <label for="employee_id" class="oe_edit_only"/>
+                            <h1><field name="employee_id" placeholder="Employee"/></h1>
+                        </div>
+                        <group>
+                            <label for="date_from" string="Period"/>
+                            <div>
+                                <field name="date_from" class="oe_inline"/> - <field name="date_to" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="input_id" 
+                                attrs = "{'invisible': [('employee_id', '=', False)], 
+                                    'required': [('employee_id', '!=', False)]}"
+                                domain="[('apply_retefunte','=',True)]"/>
+                            
+                            <field name="total" required = "1"/>
+
+                            <field name="novelty"/>
+                        </group>
+
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+		<record id="alfa_amb_hr_novelty_retefuente_tree" model="ir.ui.view">
+			<field name="name">alfa.amb.hr.novelty.retefuente.tree</field>
+			<field name="model">hr.novelty</field>
+			<field name="arch" type="xml">
+				<tree string="Novedades Retención a la Fuente">
+                    <field name="create_uid"/>
+					<field name="employee_id"/>
+                    <field name="contract_id"/>
+                    <field name="struct_id"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="input_id"/>
+                    <field name="total"/>
+                    <field name="state"/>
+				</tree>
+			</field>
+		</record>
+
+        <record id="alfa_amb_hr_novelty_retefuente_pivot" model="ir.ui.view">
+            <field name="name">alfa.amb.hr.novelty.retefuente.pivot</field>
+            <field name="model">hr.novelty</field>
+            <field name="arch" type="xml">
+                <pivot string="Novedades">
+                    <field name="employee_id"/>
+                    <field name="total" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+		<record id="action_alfa_amb_hr_novelty_retefuente" model="ir.actions.act_window">
+			<field name="name">Novedades Retención a la Fuente</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.novelty</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,pivot,search</field>
+            <field name="domain">[('apply_retefunte', '=', True)]</field>
+			<field name="search_view_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_novelty_retefuente_filter"/>
+		</record>
+
+
+        <record id="action_alfa_amb_hr_novelty_retefuente_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1000"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="alfa_amb_hr_novelty_retefuente_tree"/>
+            <field name="act_window_id" ref="action_alfa_amb_hr_novelty_retefuente"/>
+        </record>
+
+        <record id="action_alfa_amb_hr_novelty_retefuente_form" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1000"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="alfa_amb_hr_novelty_retefuente_form"/>
+            <field name="act_window_id" ref="action_alfa_amb_hr_novelty_retefuente"/>
+        </record>
+
+        <record id="action_alfa_amb_hr_novelty_retefuente_pivot" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1000"/>
+            <field name="view_mode">pivot</field>
+            <field name="view_id" ref="alfa_amb_hr_novelty_retefuente_pivot"/>
+            <field name="act_window_id" ref="action_alfa_amb_hr_novelty_retefuente"/>
+        </record>
+
+
+	</data>
+</odoo>

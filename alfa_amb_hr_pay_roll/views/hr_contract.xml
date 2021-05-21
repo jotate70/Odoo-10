@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="alfa_amb_hr_contract_view_form" model="ir.ui.view">
+            <field name="name">alfa.amb.hr.contract.view.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <field name="wage" position="attributes">
+                    <attribute name="widget">monetary</attribute>
+                    <attribute name="options">{'currency_field': 'currency_id'}</attribute>
+                </field>
+
+                <xpath expr="//page[@name='information']/group[1]" position="after">
+                    <group name="parameters_calculation_retention_source" string="PARÁMETROS PARA CÁLCULO DE RETENCIÓN EN LA FUENTE">
+
+                        <field name="rtefte_incentivo_vivienda" 
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"/>
+
+                        <field name="rtefte_aportes_vol_pens_empleador" 
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="//field[@name='type_id']" position="before">
+                    <field name="work_contract"/>
+                </xpath>
+           </field>
+        </record>
+
+
+        <record id="alfa_amb_hr_payroll_contract_view_form" model="ir.ui.view">
+            <field name="name">alfa.amb.hr.payroll.contract.view.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_payroll.hr_contract_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='struct_id']" position="before">
+                    <field name="currency_id" invisible="1"/>
+
+                    <field name="non_benefit_wage" 
+                        widget="monetary"
+                        options="{'currency_field': 'currency_id'}"/>
+
+                    <field name="bearing" 
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"/>
+
+                    <field name="apply_transportation_assistance"/>
+
+                    <field name="retired"/>
+                </xpath>
+           </field>
+        </record>
+
+
+
+
+
+
+    </data>
+</odoo>

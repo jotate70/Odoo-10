@@ -1,0 +1,15 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_alfa_amb_risk_classes_user,alfa.amb_risk_classes,model_alfa_amb_risk_classes,hr.group_hr_user,1,1,1,0
+access_alfa_amb_risk_classes_manager,alfa.amb_risk_classes,model_alfa_amb_risk_classes,hr.group_hr_manager,1,1,1,1
+access_hr_novelty_user,hr.novelty,model_hr_novelty,hr.group_hr_user,1,1,1,0
+access_hr_novelty_manager,hr.novelty,model_hr_novelty,hr.group_hr_manager,1,1,1,1
+access_hr_novelty_hr_payroll_user,hr.novelty,model_hr_novelty,hr_payroll.group_hr_payroll_user,1,1,1,0
+access_hr_novelty_hr_payroll_manager,hr.novelty,model_hr_novelty,hr_payroll.group_hr_payroll_manager,1,1,1,1
+access_alfa_amb_specific_cau_sal_str_user,alfa.amb_specific_cau_sal_str,model_alfa_amb_specific_cau_sal_str,hr.group_hr_user,1,1,1,0
+access_alfa_amb_specific_cau_sal_str_manager,alfa.amb_specific_cau_sal_str,model_alfa_amb_specific_cau_sal_str,hr.group_hr_manager,1,1,1,1
+access_alfa_amb_specific_cau_sal_str_hr_payroll_user,alfa.amb_specific_cau_sal_str,model_alfa_amb_specific_cau_sal_str,hr_payroll.group_hr_payroll_user,1,1,1,0
+access_alfa_amb_specific_cau_sal_str_hr_payroll_manager,alfa.amb_specific_cau_sal_str,model_alfa_amb_specific_cau_sal_str,hr_payroll.group_hr_payroll_manager,1,1,1,1
+access_hr_payslip_worked_days_officer,hr.payslip.worked_days,hr_payroll.model_hr_payslip_worked_days,hr_payroll.group_hr_payroll_user,1,1,1,0
+access_hr_rule_input_officer,hr.rule.input,hr_payroll.model_hr_rule_input,hr_payroll.group_hr_payroll_user,1,1,1,0
+access_hr_payslip_run_officer,hr.payslip.run,hr_payroll.model_hr_payslip_run,hr_payroll.group_hr_payroll_user,1,1,1,0
+access_hr_rule_input_officer_employee,hr.rule.input,hr_payroll.model_hr_rule_input,hr.group_hr_user,1,1,0,0

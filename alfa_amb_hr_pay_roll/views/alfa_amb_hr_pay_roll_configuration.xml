@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="alfa_amb_hr_pay_roll_config_settings_form" model="ir.ui.view">
+            <field name="name">Configuración Parametros globales nómina</field>
+            <field name="model">alfa.amb_hr_pay_roll_config_settings</field>
+            <field name="arch" type="xml">
+                <form string="Configuración Parametros globales nómina" class="oe_form_configuration">
+                    <header>
+                        <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                        <button string="Cancel" type="object" name="cancel" class="oe_link"/>
+                    </header>
+                    <group string="Configuración Parametros globales nómina" name="parametros_globales_nomina">
+                        <field name="company_id" invisible="1"/>
+                        
+                        <label for="eps_partner_ids"/>
+                        <div>
+                            <field name='eps_partner_ids' 
+                                widget='many2many_tags' nolabel='1'/> 
+                        </div>
+
+                        <label for="afp_partner_ids"/>
+                        <div>
+                            <field name='afp_partner_ids' 
+                                widget='many2many_tags' nolabel='1'/> 
+                        </div>
+
+                        <label for="severance_partner_ids"/>
+                        <div>
+                            <field name='severance_partner_ids' 
+                                widget='many2many_tags' nolabel='1'/> 
+                        </div>
+
+                        <label for="ccf_partner_ids"/>
+                        <div>
+                            <field name='ccf_partner_ids' 
+                                widget='many2many_tags' nolabel='1'/> 
+                        </div>
+
+                        <label for="arl_partner_ids"/>
+                        <div>
+                            <field name='arl_partner_ids' 
+                                widget='many2many_tags' nolabel='1'/> 
+                        </div>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_alfa_amb_hr_pay_roll_config_settings" model="ir.actions.act_window">
+            <field name="name">Configuración Parametros globales nómina</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">alfa.amb_hr_pay_roll_config_settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+    </data>
+</odoo>

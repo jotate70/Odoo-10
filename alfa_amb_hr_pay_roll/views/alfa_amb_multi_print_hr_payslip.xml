@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record model="ir.actions.server" id="print_multi_hr_payslip">
+		<field name="name">Imprimir Nómina Múltiple</field>
+		<field name="model_id" ref="hr_payroll.model_hr_payslip"/>
+		<field name="sequence">101</field>
+		<field name="code">
+hr_pasylips = env['hr.payslip']
+for item in records:
+
+    if item.state not in ('cancel'):
+        hr_pasylips += item
+		
+action = item.print_multi_hr_payslip(hr_pasylips)
+		</field>
+	</record>
+
+	<record model="ir.values" id="ir_value_print_multi_hr_payslip">
+		<field name="model_id" ref="hr_payroll.model_hr_payslip"/>
+		<field name="name">Imprimir Nómina Múltiple</field>
+		<field name="key2">client_action_multi</field>
+		<field name="value" eval="'ir.actions.server,' +str(ref('print_multi_hr_payslip'))"/>
+		<field name="key">action</field>
+		<field name="model">hr.payslip</field>
+	</record>
+
+
+</odoo>

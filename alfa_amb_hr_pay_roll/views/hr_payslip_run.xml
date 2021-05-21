@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="alfa_amb_hr_payslip_run_view_form" model="ir.ui.view">
+            <field name="name">alfa.amb.hr.payslip.view.form</field>
+            <field name="model">hr.payslip.run</field>
+            <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[2]" position="attributes">
+                    <attribute name="groups">hr_payroll.group_hr_payroll_manager</attribute>
+                    <attribute name="string">Agregar Empleados</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='close_payslip_run']" position="attributes">
+                    <attribute name="groups">hr_payroll.group_hr_payroll_manager</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='draft_payslip_run']" position="attributes">
+                    <attribute name="groups">hr_payroll.group_hr_payroll_manager</attribute>
+                </xpath>
+
+
+                <xpath expr="//header//button[@name='close_payslip_run']" position="after">
+                    <field name="has_slip_ids" invisible='1'/>
+                    
+                    <button name="recalculate_payslips" 
+                        type="object" 
+                        string="Recalcular Nóminas" 
+                        class="oe_highlight"
+                        groups="hr_payroll.group_hr_payroll_manager" 
+                        attrs="{'invisible': ['|', ('has_slip_ids', '=', False), ('state', '=', 'close')]}"/>
+
+                    <button name="confirm_payslips" 
+                        type="object" 
+                        string="Confirmar Nóminas" 
+                        class="oe_highlight"
+                        groups="hr_payroll.group_hr_payroll_manager" 
+                        attrs="{'invisible': ['|', ('has_slip_ids', '=', False), ('state', '=', 'close')]}"/>
+
+                    <button name="cancel_payslips" 
+                        type="object" 
+                        string="Cancelar Nóminas" 
+                        class="oe_highlight"
+                        groups="hr_payroll.group_hr_payroll_manager" 
+                        attrs="{'invisible': ['|', ('has_slip_ids', '=', False), ('state', '=', 'close')]}"/>
+
+                    <button name="update_news" 
+                        type="object" 
+                        string="Actualizar Novedades" 
+                        class="oe_highlight"
+                        attrs="{'invisible': ['|', ('has_slip_ids', '=', False), ('state', '=', 'close')]}"/>
+                </xpath>
+           </field>
+        </record>
+    </data>
+</odoo>

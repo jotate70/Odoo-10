@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="alfa_amb_hr_employee_view_search" model="ir.ui.view">
+            <field name="name">alfa.amb.hr.employee.view.search</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr='//search/field[@name="job_id"]' position="after">
+                    <separator/>
+                    <filter string="Nóminas activos" 
+                        name="paslip_active" 
+                        domain="[('active_contracts','=',True)]"/>
+
+                    <filter string="Sin Nómina activa" 
+                        name="without_paslip_active" 
+                        domain="[('active_contracts','=',False)]"/>
+
+                    <separator/>
+                    <filter string="Vigente mes actual" 
+                        name="current_current_month " 
+                        domain="[('work_contract', '=', True),('date_start_contract','&lt;',(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01')),'|',('date_end_contract','&gt;=',context_today().strftime('%%Y-%%m-01')), ('date_end_contract', '=', None)]" help="Contratos vigentes para este mes"/>
+                    
+                    <filter string="Vigente mes anterior" 
+                        name="current_last_month" 
+                        domain="[('work_contract', '=', True),('date_start_contract','&lt;',time.strftime('%%Y-%%m-01')),'|',('date_end_contract','&gt;=', (context_today()-relativedelta(months=1)).strftime('%%Y-%%m-01')), ('date_end_contract', '=', None)]" help="Contratos vigentes mes anterior"/>
+
+                </xpath>
+            </field>
+        </record>
+
+        <record id="alfa_amb_hr_employee_view_form" model="ir.ui.view">
+            <field name="name">alfa.amb.hr.employee.view.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+		       <xpath expr="//notebook/page[@name='hr_settings']/group[1]" position="inside">
+                    <group name = 'social_security' string = 'Seguridad Social'>
+                        <field name="active_contracts" invisible='1'/>
+                        <field name="work_contract" invisible='1'/>
+                        <field name="eps_id" widget='selection'/>
+                        <field name="afp_id" widget='selection'/>
+                        <field name="severance_id" widget='selection'/>
+                        <field name="ccf_id" widget='selection'/>
+                        <field name="arl_id" widget='selection'/>
+                        <field name="risk_type_id"
+                                widget='selection'
+                                attrs = "{'invisible': [('arl_id', '=', False)], 
+                                                                'required': [('arl_id', '!=', False)]}"/>
+
+                        <label for="percentage_risk" attrs = "{'invisible': [('risk_type_id', '=', False)]}"/>
+                        <div attrs = "{'invisible': [('risk_type_id', '=', False)]}">
+                            <field name='percentage_risk' 
+                                class="oe_inline"
+                                readonly = '1'/> %
+                        </div>  
+                    </group>
+		        </xpath>
+           </field>
+        </record>
+
+        <record id="alfa_amb_payroll_hr_employee_view_form" model="ir.ui.view">
+            <field name="name">alfa.amb.payroll.hr.employee.view.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//div[@name="button_box"]/button[4]' position="attributes">
+                    <attribute name="groups">hr_payroll.group_hr_payroll_manager</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="alfa_amb_payroll_hr_employee_view_tree" model="ir.ui.view">
+            <field name="name">alfa.amb.payroll.hr.employee.view.tree</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="parent_id"]' position="after">
+                    <field name="date_start_contract"/>
+                    <field name="date_end_contract"/>
+                    <field name="date_last_payroll"/>
+                </xpath>
+            </field>
+        </record>
+
+
+
+        <record id="hr.open_view_employee_list_my" model="ir.actions.act_window"> 
+            <field name="context">{'search_default_paslip_active': True}</field>
+        </record>
+
+        <record id="hr.open_view_employee_list" model="ir.actions.act_window"> 
+            <field name="context">{'search_default_paslip_active': True}</field>
+        </record>
+
+        <record id="hr.open_view_employee_tree" model="ir.actions.act_window"> 
+            <field name="context">{'search_default_paslip_active': True}</field>
+        </record>
+
+
+    </data>
+</odoo>

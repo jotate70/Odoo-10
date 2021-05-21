@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+        <record id="alfa_amb_risk_classes_filter" model="ir.ui.view">
+            <field name="name">alfa.amb.risk.classes.filter</field>
+            <field name="model">alfa.amb_risk_classes</field>
+            <field name="arch" type="xml">
+                <search string="Clases de Riesgo">
+                    <field name="name" string="Clase" filter_domain="[('name','ilike',self)]"/>
+               </search>
+            </field>
+        </record>
+
+        <record id="alfa_amb_risk_classes_form" model="ir.ui.view">
+            <field name="name">alfa.amb.risk.classes.form</field>
+            <field name="model">alfa.amb_risk_classes</field>
+            <field name="arch" type="xml">
+                <form string="Tipo de Riesgo">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name='name' required = '1'/>
+                            </group>
+                            <group>
+                                <label for="percentage_risk"/>
+                                <div>
+                                    <field name='percentage_risk' 
+                                        class="oe_inline"
+                                        required = '1'/> %
+                                </div>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+		<record id="alfa_amb_risk_classes_tree" model="ir.ui.view">
+			<field name="name">alfa.amb.risk.classes.tree</field>
+			<field name="model">alfa.amb_risk_classes</field>
+			<field name="arch" type="xml">
+				<tree string="Tipos de riesgos">
+					<field name="name"/>
+					<field name="percentage_risk"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_alfa_amb_risk_classes" model="ir.actions.act_window">
+			<field name="name">Tipos de Riesgos</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">alfa.amb_risk_classes</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,search</field>
+			<field name="view_id" ref="alfa_amb_hr_pay_roll.alfa_amb_risk_classes_tree"/>
+			<field name="search_view_id" ref="alfa_amb_hr_pay_roll.alfa_amb_risk_classes_filter"/>
+		</record>
+	</data>
+</odoo>
