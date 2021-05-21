@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="alfa_amb_risk_classes_one" model='alfa.amb_risk_classes'>
+            <field name="name">Riesgo I</field>
+            <field name="percentage_risk">0.522</field>
+        </record>
+
+        <record id="alfa_amb_risk_classes_two" model='alfa.amb_risk_classes'>
+            <field name="name">Riesgo II</field>
+            <field name="percentage_risk">1.044</field>
+        </record>
+
+        <record id="alfa_amb_risk_classes_three" model='alfa.amb_risk_classes'>
+            <field name="name">Riesgo III</field>
+            <field name="percentage_risk">2.436</field>
+        </record>
+
+        <record id="alfa_amb_risk_classes_four" model='alfa.amb_risk_classes'>
+            <field name="name">Riesgo IV</field>
+            <field name="percentage_risk">4.350</field>
+        </record>
+
+        <record id="alfa_amb_risk_classes_five" model='alfa.amb_risk_classes'>
+            <field name="name">Riesgo V</field>
+            <field name="percentage_risk">6.960</field>
+        </record>
+    </data>
+</odoo>

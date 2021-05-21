@@ -1,0 +1,1250 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<data noupdate="1">
+    <record id="hr_salary_rule_salary" model="hr.salary.rule">
+        <field name="name">SUELDO</field>
+        <field name="category_id" ref="hr_payroll.BASIC"/>
+        <field name="code">SUELDO</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="18"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = DIAS_SUELDO* SALARIO_BASE /30
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_net" model="hr.salary.rule">
+        <field name="name">NETO</field>
+        <field name="category_id" ref="hr_payroll.NET"/>
+        <field name="code">NETO</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="35"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result=categories.BASICO + categories.NO_SALARIAL + categories.DEDUCCIONES
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_non_salary_payment" model="hr.salary.rule">
+        <field name="name">PAGO NO SALARIAL</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_no_salary"/>
+        <field name="code">PAGO_NO_SALARIAL</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="29"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result = inputs.PAGO_NO_SALARIAL.amount >0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = inputs.PAGO_NO_SALARIAL.amount or 0
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_desc_loan" model="hr.salary.rule">
+        <field name="name">DESC PRESTAMO</field>
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="code">OTROS_PREST</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="35"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result = inputs.DESC_PRESTAMO.amount >0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+#COMO EL RESULTADO ES NEGATIVO EN CONTABILIDAD SE RELACIONA UNA CUENTA DÉBITO PARA QUE SE REGISTRE POSITIVO EN EL CRÉDITO
+result = -1*inputs.DESC_PRESTAMO.amount or 0
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_transp_aid" model="hr.salary.rule">
+        <field name="name">AUXILIO TRANSP</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_no_salary"/>
+        <field name="code">AUXTRANSPVIG</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="30"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+auxilio_transp=102854
+res=0
+if SALARIO_BASE&lt;2*SALARIOMINIMO and contract.apply_transportation_assistance:
+   res=DIAS_SUELDO* auxilio_transp/30
+result=res>0 
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+auxilio_transp=102854
+result=0
+if SALARIO_BASE&lt;2*SALARIOMINIMO and contract.apply_transportation_assistance:
+   result=DIAS_SUELDO* auxilio_transp/30
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_mimimin_salary" model="hr.salary.rule">
+        <field name="name">SALARIO MINIMO</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_constants"/>
+        <field name="code">SALARIOMINIMO</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="4"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">fix</field>
+        <field name="quantity" eval="1"/>
+        <field name="amount_fix" eval="877803.00"/>
+    </record>
+
+    <record id="hr_salary_rule_incentive_commissions" model="hr.salary.rule">
+        <field name="name">COMISIONES - INCENTIVOS</field>
+        <field name="category_id" ref="hr_payroll.BASIC"/>
+        <field name="code">COMISIONES</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="24"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.COMISIONES.amount>0    
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = inputs.COMISIONES.amount or 0
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_health_desc_4" model="hr.salary.rule">
+        <field name="name">DESC SALUD 4%</field>
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="code">DESC_SALUD</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="32"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+#COMO EL RESULTADO ES NEGATIVO EN CONTABILIDAD SE RELACIONA UNA CUENTA DÉBITO PARA QUE SE REGISTRE POSITIVO EN EL CRÉDITO
+base_aportes=categories.BASICO
+if BASE_SAL>25*SALARIOMINIMO:
+    base_aportes=25*SALARIOMINIMO
+result =-1*base_aportes*0.04
+        </field>
+        <field name="register_id" ref = 'alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_contribution_register_eps'/>
+
+    </record>
+
+    <record id="hr_salary_rule_desc_pension" model="hr.salary.rule">
+        <field name="name">DESC PENSION 4%</field>
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="code">DESC_PENSION</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="32"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=contract.retired==False    
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+#COMO EL RESULTADO ES NEGATIVO EN CONTABILIDAD SE RELACIONA UNA CUENTA DÉBITO PARA QUE SE REGISTRE POSITIVO EN EL CRÉDITO
+base_aportes=categories.BASICO
+if BASE_SAL>25*SALARIOMINIMO:
+    base_aportes=25*SALARIOMINIMO
+result =-1*base_aportes*0.04
+        </field>
+        <field name="register_id" ref = 'alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_contribution_register_afp'/>
+    </record>
+
+    <record id="hr_salary_rule_fondo_sol" model="hr.salary.rule">
+        <field name="name">FONDO SOLIDARIDAD</field>
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="code">FONDO_SOL</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="33"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=categories.BASICO>=4*SALARIOMINIMO 
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+#COMO EL RESULTADO ES NEGATIVO EN CONTABILIDAD SE RELACIONA UNA CUENTA DÉBITO PARA QUE SE REGISTRE POSITIVO EN EL CRÉDITO
+result=0
+if categories.BASICO >=4*SALARIOMINIMO:
+    result=-1*categories.BASICO*0.01
+        </field>
+        <field name="register_id" ref = 'alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_contribution_register_afp'/>
+    </record>
+
+    <record id="hr_salary_rule_h_extra" model="hr.salary.rule">
+        <field name="name">H EXTRAS Y RECARGOS</field>
+        <field name="category_id" ref="hr_payroll.BASIC"/>
+        <field name="code">H_EXTRAS</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="25"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.HED.amount+inputs.HEN.amount+inputs.HEDF.amount+inputs.HENF.amount+inputs.HRN.amount+inputs.HRF.amount+inputs.HRFN.amount>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+recargo_HED = 1.25
+recargo_HEN = 1.75
+recargo_HEDF = 2.00
+recargo_HENF = 2.50
+recargo_HRN = 0.35
+recargo_HRF = 0.75
+recargo_HRFN = 1.10
+
+salario_hora =SALARIO_BASE/240
+total_HED =salario_hora* recargo_HED*inputs.HED.amount
+total_HEN = salario_hora*recargo_HEN*inputs.HEN.amount
+total_HEDF =salario_hora*recargo_HEDF*inputs.HEDF.amount
+total_HENF =salario_hora*recargo_HENF*inputs.HENF.amount
+total_HRN =salario_hora*recargo_HRN*inputs.HRN.amount
+total_HRF =salario_hora*recargo_HRF*inputs.HRF.amount
+total_HRFN = salario_hora*recargo_HRFN*inputs.HRFN.amount
+
+result =total_HED +total_HEN + total_HEDF +total_HENF +total_HRN+ total_HRF +total_HRFN
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_base_sal" model="hr.salary.rule">
+        <field name="name">BASE SALARIAL</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_salary_base"/>
+        <field name="code">BASE_SAL</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="27"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result=categories.BASICO
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_dias_sueldo" model="hr.salary.rule">
+        <field name="name">DIAS SUELDO</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_calculations"/>
+        <field name="code">DIAS_SUELDO</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="15"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+#pendiente validar que la suma de días de novedades no supere 30 o los días del periodo de cálculo
+#dias_periodo=worked_days.WORK100.number_of_days
+dias_periodo=30
+ingreso=inputs.DIA_DE_INGRESO.amount
+if ingreso>31:
+    ingreso=31
+retiro=inputs.DIA_DE_RETIRO.amount
+if retiro > 30:
+    retiro = 30
+a=inputs.DIAS_AUSEN_NO_JUST.amount
+b=inputs.DIAS_IGEN.amount
+c=inputs.DIAS_INCLAB.amount
+d=inputs.DIAS_LIC_REM.amount
+e=inputs.DIAS_LIC_NO_REM.amount
+f=inputs.DIAS_LIC_MAT.amount
+g=inputs.DIAS_VACACIONES.amount
+
+result =dias_periodo -a-b-c-d-e-f-g
+if ingreso>0:
+    result= result- ingreso+1
+if retiro>0:
+    desc_dias_retirado = dias_periodo - retiro
+    result=result-desc_dias_retirado 
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_dias_vacaciones" model="hr.salary.rule">
+        <field name="name">DIAS VACACIONES</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_days_news"/>
+        <field name="code">DIAS_VACACIONES</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="9"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.DIAS_VACACIONES.amount>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result=inputs.DIAS_VACACIONES.amount
+        </field>       
+    </record>
+
+    <record id="hr_salary_rule_dias_incap_gen" model="hr.salary.rule">
+        <field name="name">DIAS INCAP GEN</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_days_news"/>
+        <field name="code">DIAS_IGEN</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="7"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.DIAS_IGEN.amount>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result=inputs.DIAS_IGEN.amount
+        </field>      
+    </record>
+
+    <record id="hr_salary_rule_dias_inclab" model="hr.salary.rule">
+        <field name="name">DIAS INCAP LAB</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_days_news"/>
+        <field name="code">DIAS_INCLAB</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="8"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.DIAS_INCLAB.amount>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result=inputs.DIAS_INCLAB.amount
+        </field>     
+    </record>
+
+    <record id="hr_salary_rule_dias_lic_mat" model="hr.salary.rule">
+        <field name="name">DIAS LICENCIA MAT</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_days_news"/>
+        <field name="code">DIAS_LIC_MAT</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="11"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.DIAS_LIC_MAT.amount>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result=inputs.DIAS_LIC_MAT.amount
+        </field>     
+    </record>
+
+    <record id="hr_salary_rule_dias_lic_rem" model="hr.salary.rule">
+        <field name="name">DIAS LICENCIA REM</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_days_news"/>
+        <field name="code">DIAS_LIC_REM</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="12"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.DIAS_LIC_REM.amount>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result=inputs.DIAS_LIC_REM.amount
+        </field>     
+    </record>
+
+    <record id="hr_salary_rule_dias_lic_no_rem" model="hr.salary.rule">
+        <field name="name">DIAS LICENCIA NO REM</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_days_news"/>
+        <field name="code">DIAS_LIC_NO_REM</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="12"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.DIAS_LIC_NO_REM.amount>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result=inputs.DIAS_LIC_NO_REM.amount
+        </field>  
+    </record>
+
+    <record id="hr_salary_rule_dias_ausen_no_just" model="hr.salary.rule">
+        <field name="name">DIAS AUSENCIA NO JUST</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_days_news"/>
+        <field name="code">DIAS_AUSEN_NO_JUST</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="13"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.DIAS_AUSEN_NO_JUST.amount>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result=inputs.DIAS_AUSEN_NO_JUST.amount
+        </field>     
+    </record>
+
+    <record id="hr_salary_rule_ing_vacaciones" model="hr.salary.rule">
+        <field name="name">VACACIONES</field>
+        <field name="category_id" ref="hr_payroll.BASIC"/>
+        <field name="code">ING_VACACIONES</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="21"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.DIAS_VACACIONES.amount>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = inputs.DIAS_VACACIONES.amount* SALARIO_BASE/30
+        </field>      
+    </record>
+
+    <record id="hr_salary_rule_ing_igen" model="hr.salary.rule">
+        <field name="name">INCAPACIDAD GEN</field>
+        <field name="category_id" ref="hr_payroll.BASIC"/>
+        <field name="code">ING_IGEN</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="19"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.DIAS_IGEN.amount>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+salario_incap=SALARIO_BASE * 2/3
+if salario_incap &lt; SALARIOMINIMO:
+     salario_incap=SALARIOMINIMO
+result = inputs.DIAS_IGEN.amount * salario_incap / 30
+        </field>      
+    </record>
+
+    <record id="hr_salary_rule_ing_lic_rem" model="hr.salary.rule">
+        <field name="name">LICENCIA REM</field>
+        <field name="category_id" ref="hr_payroll.BASIC"/>
+        <field name="code">ING_LIC_REM</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="22"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.DIAS_LIC_REM.amount>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = inputs.DIAS_LIC_REM.amount* SALARIO_BASE /30
+        </field>      
+    </record>
+
+    <record id="hr_salary_rule_ing_inclab" model="hr.salary.rule">
+        <field name="name">INCAPACIDAD LAB</field>
+        <field name="category_id" ref="hr_payroll.BASIC"/>
+        <field name="code">ING_INCLAB</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="20"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.DIAS_INCLAB.amount>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = inputs.DIAS_INCLAB.amount* SALARIO_BASE/30
+        </field>      
+    </record>
+
+    <record id="hr_salary_rule_ing_lic_mat" model="hr.salary.rule">
+        <field name="name">LICENCIA MAT</field>
+        <field name="category_id" ref="hr_payroll.BASIC"/>
+        <field name="code">ING_LIC_MAT</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="23"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.DIAS_LIC_MAT.amount>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = inputs.DIAS_LIC_MAT.amount* SALARIO_BASE /30
+        </field>      
+    </record>
+
+    <record id="hr_salary_rule_salario_noprest" model="hr.salary.rule">
+        <field name="name">SALARIO NO PREST</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_no_salary"/>
+        <field name="code">SALARIO_NOPREST</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="17"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=contract.non_benefit_wage>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result=contract.non_benefit_wage*DIAS_NOMINA/30
+        </field>      
+    </record>
+
+    <record id="hr_salary_rule_provision_eps" model="hr.salary.rule">
+        <field name="name">PROVISION EPS</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_provisions_ssi"/>
+        <field name="code">PROVISION_EPS</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="37"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=categories.BASICO>=10*SALARIOMINIMO
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+base_aportes=categories.BASICO
+if base_aportes>25*SALARIOMINIMO:
+    base_aportes=25*SALARIOMINIMO
+result =base_aportes*0.085
+        </field>
+        <field name="register_id" ref = 'alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_contribution_register_eps'/>
+    </record>
+
+    <record id="hr_salary_rule_provision_afp" model="hr.salary.rule">
+        <field name="name">PROVISION AFP</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_provisions_ssi"/>
+        <field name="code">PROVISION_AFP</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="39"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=contract.retired==False
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+base_aportes=categories.BASICO
+if base_aportes>25*SALARIOMINIMO:
+    base_aportes=25*SALARIOMINIMO
+result =base_aportes*0.12
+        </field>
+        <field name="register_id" ref = 'alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_contribution_register_afp'/>
+    </record>
+
+    <record id="hr_salary_rule_provision_ccf" model="hr.salary.rule">
+        <field name="name">PROVISION CCF</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_provisions_ssi"/>
+        <field name="code">PROVISION_CCF</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="41"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+#NO HAY APORTES EN INCAPACIDAD NI LICENCIA MATERNIDAD
+base_aportes=SUELDO 
+if rules.COMISIONES:
+ base_aportes=base_aportes+ COMISIONES
+if rules.H_EXTRAS:
+ base_aportes=base_aportes + H_EXTRAS
+if rules.ING_LIC_REM:
+ base_aportes= base_aportes + ING_LIC_REM
+if rules.ING_VACACIONES:
+ base_aportes= base_aportes + ING_VACACIONES
+
+if base_aportes>25*SALARIOMINIMO:
+    base_aportes=25*SALARIOMINIMO
+
+result =base_aportes*0.04
+        </field>
+        <field name="register_id" ref = 'alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_contribution_register_ccf'/>
+    </record>
+
+
+    <record id="hr_salary_rule_provision_arl" model="hr.salary.rule">
+        <field name="name">PROVISION ARL</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_provisions_ssi"/>
+        <field name="code">PROVISION_ARL</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="40"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+base_aportes=SUELDO
+if rules.COMISIONES:
+ base_aportes=base_aportes+COMISIONES
+if rules.H_EXTRAS:
+ base_aportes=base_aportes+H_EXTRAS
+
+if base_aportes>25*SALARIOMINIMO:
+ base_aportes=25*SALARIOMINIMO
+
+result=base_aportes*employee.percentage_risk/100
+        </field>
+        <field name="register_id" ref = 'alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_contribution_register_arl'/>
+    </record>
+
+    <record id="hr_salary_rule_provision_cesant" model="hr.salary.rule">
+        <field name="name">PROVISION CESANT</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_provisions_prest"/>
+        <field name="code">PROVISION_CESANT</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="44"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+aux_transp=0
+if rules.AUXTRANSPVIG:
+    aux_transp=AUXTRANSPVIG
+result =(categories.BASICO+aux_transp)*30/360
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_provision_int_cesant" model="hr.salary.rule">
+        <field name="name">PROVISION INT CESANT</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_provisions_prest"/>
+        <field name="code">PROVISION_INT_CESANT</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="45"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+aux_transp=0
+if rules.AUXTRANSPVIG:
+    aux_transp=AUXTRANSPVIG
+result =0.12*(categories.BASICO+aux_transp)*30/360
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_provision_prima" model="hr.salary.rule">
+        <field name="name">PROVISION PRIMA</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_provisions_prest"/>
+        <field name="code">PROVISION_PRIMA</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="47"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+aux_transp=0
+if rules.AUXTRANSPVIG:
+    aux_transp=AUXTRANSPVIG
+result =(categories.BASICO+aux_transp)*30/360
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_provision_vac" model="hr.salary.rule">
+        <field name="name">PROVISION VAC</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_provisions_prest"/>
+        <field name="code">PROVISION_VAC</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="46"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+#NO COTIZA POR HORAS EXTRAS, COMISIONES
+base_vac=categories.BASICO
+if rules.H_EXTRAS:
+ base_vac=base_vac - H_EXTRAS
+if rules.COMISIONES:
+ base_vac=base_vac - COMISIONES
+
+result=base_vac*15/360
+
+#result =(SALARIO_BASE*DIAS_NOMINA/30)*15/360
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_salario_base" model="hr.salary.rule">
+        <field name="name">SALARIO BASE</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_calculations"/>
+        <field name="code">SALARIO_BASE</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="16"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=contract.wage>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result=contract.wage
+        </field>
+    </record>
+
+
+    <record id="hr_salary_rule_provision_sena" model="hr.salary.rule">
+        <field name="name">PROVISION SENA</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_provisions_ssi"/>
+        <field name="code">PROVISION_SENA</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="41"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+base_aportes=SUELDO 
+if rules.COMISIONES:
+ base_aportes=base_aportes+ COMISIONES
+if rules.H_EXTRAS:
+ base_aportes=base_aportes + H_EXTRAS
+if rules.ING_LIC_REM:
+ base_aportes= base_aportes + ING_LIC_REM
+if rules.ING_VACACIONES:
+ base_aportes= base_aportes + ING_VACACIONES
+result=base_aportes>=10*SALARIOMINIMO
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+#NO APORTA EN INCAPACIDAD
+#APORTA EN VACACIONES, LICENCIA REM
+
+base_aportes=SUELDO 
+if rules.COMISIONES:
+ base_aportes=base_aportes+ COMISIONES
+if rules.H_EXTRAS:
+ base_aportes=base_aportes + H_EXTRAS
+if rules.ING_LIC_REM:
+ base_aportes= base_aportes + ING_LIC_REM
+if rules.ING_VACACIONES:
+ base_aportes= base_aportes + ING_VACACIONES
+
+base_aportes=BASE_SAL
+if BASE_SAL>25*SALARIOMINIMO:
+    base_aportes=25*SALARIOMINIMO
+
+result =base_aportes*0.02
+        </field>
+        <field name="register_id" ref = 'alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_contribution_register_sena'/>
+    </record>
+
+    <record id="hr_salary_rule_provision_icbf" model="hr.salary.rule">
+        <field name="name">PROVISION ICBF</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_provisions_ssi"/>
+        <field name="code">PROVISION_ICBF</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="43"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+base_aportes=SUELDO 
+if rules.COMISIONES:
+ base_aportes=base_aportes+ COMISIONES
+if rules.H_EXTRAS:
+ base_aportes=base_aportes + H_EXTRAS
+if rules.ING_LIC_REM:
+ base_aportes= base_aportes + ING_LIC_REM
+if rules.ING_VACACIONES:
+ base_aportes= base_aportes + ING_VACACIONES
+result=base_aportes>=10*SALARIOMINIMO
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+#NO APORTA EN INCAPACIDAD
+#APORTA EN VACACIONES, LICENCIA REM
+
+base_aportes=SUELDO 
+if rules.COMISIONES:
+ base_aportes=base_aportes+ COMISIONES
+if rules.H_EXTRAS:
+ base_aportes=base_aportes + H_EXTRAS
+if rules.ING_LIC_REM:
+ base_aportes= base_aportes + ING_LIC_REM
+if rules.ING_VACACIONES:
+ base_aportes= base_aportes + ING_VACACIONES
+
+base_aportes=BASE_SAL
+if BASE_SAL>25*SALARIOMINIMO:
+    base_aportes=25*SALARIOMINIMO
+
+
+result =base_aportes*0.03
+        </field>
+        <field name="register_id" ref = 'alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_contribution_register_icbf'/>
+    </record>
+
+    <record id="hr_salary_rule_dias_ingreso" model="hr.salary.rule">
+        <field name="name">DIA DE INGRESO</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_days_news"/>
+        <field name="code">DIA_DE_INGRESO</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="6"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.DIA_DE_INGRESO.amount>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result=inputs.DIA_DE_INGRESO.amount
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_dia_retiro" model="hr.salary.rule">
+        <field name="name">DIA DE RETIRO</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_days_news"/>
+        <field name="code">DIA_DE_RETIRO</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="5"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result=inputs.DIA_DE_RETIRO.amount>0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result=inputs.DIA_DE_RETIRO.amount
+        </field>   
+    </record>
+
+    <record id="hr_salary_rule_provision_provision_eps_aprendiz_sena" model="hr.salary.rule">
+        <field name="name">PROVISION EPS APRENDIZ SENA</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_provisions_ssi"/>
+        <field name="code">PROVISION_EPS_APR_SENA</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="37"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+base_aportes=categories.BASICO
+if BASE_SAL>25*SALARIOMINIMO:
+    base_aportes=25*SALARIOMINIMO
+if base_aportes&lt;SALARIOMINIMO*DIAS_NOMINA/30:
+    base_aportes=SALARIOMINIMO*DIAS_NOMINA/30
+result =base_aportes*0.125
+        </field>
+        <field name="register_id" ref = 'alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_contribution_register_eps'/>
+    </record>
+
+    <record id="hr_salary_rule_dias_nomina" model="hr.salary.rule">
+        <field name="name">DIAS NOMINA</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_calculations"/>
+        <field name="code">DIAS_NOMINA</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="14"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+#pendiente validar que la suma de días de novedades no supere 30 o los días del periodo de cálculo
+#dias_periodo=worked_days.WORK100.number_of_days
+dias_periodo=30
+ingreso=inputs.DIA_DE_INGRESO.amount
+if ingreso>31:
+    ingreso=31
+retiro=inputs.DIA_DE_RETIRO.amount
+if retiro > 30:
+    retiro = 30
+a=inputs.DIAS_AUSEN_NO_JUST.amount
+e=inputs.DIAS_LIC_NO_REM.amount
+
+result =dias_periodo -a-e
+if ingreso>0:
+    result= result- ingreso+1
+if retiro>0:
+    desc_dias_retirado = dias_periodo - retiro
+    result=result-desc_dias_retirado 
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_reembolso" model="hr.salary.rule">
+        <field name="name">REEMBOLSO</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_no_salary"/>
+        <field name="code">REEMBOLSO</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="28"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result = inputs.REEMBOLSO.amount >0
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = inputs.REEMBOLSO.amount or 0
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_costo_total" model="hr.salary.rule">
+        <field name="name">COSTO TOTAL</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_calculations"/>
+        <field name="code">COSTO_TOTAL</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="48"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result=categories.BASICO + categories.NO_SALARIAL + categories.PROVISIONES_PREST +categories.PROVISIONES_SSI
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_uvt" model="hr.salary.rule">
+        <field name="name">UVT</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_constants"/>
+        <field name="code">UVT</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="3"/>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">fix</field>
+        <field name="quantity" eval="1"/>
+        <field name="amount_fix" eval="35607.00"/>
+    </record>
+
+    <record id="hr_salary_rule_retefuente_calc" model="hr.salary.rule">
+        <field name="name">RETEFUENTE</field>
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="code">RETEFUENTE_CALC</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="34"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+#ESTA REGLA SOLO SE CALCULA SI EL INPUT DE RETEFUENTE MANUAL ESTÁ EN $0, DE MANERA QUE SEAN EXCLUYENTES
+result=categories.BASICO + categories.NO_SALARIAL  >5000000
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+#COMO EL RESULTADO ES NEGATIVO EN CONTABILIDAD SE RELACIONA UNA CUENTA DÉBITO PARA QUE SE REGISTRE POSITIVO EN EL CRÉDITO
+
+#-------DEFINIR INPUTS O CAMPO ORIGEN--------------------------
+incentivo_vivienda=0                                     #FILA 10 se crea en el contrato
+aportes_vol_pens_empleador=0                  #FILA 13 se crea en el contrato
+
+aportes_vol_pensi_obl=inputs.RTFNTE_AP_VOL_PENS_OBL.amount      #FILA 20
+otros_ing_no_rent=inputs.RTFNTE_OTR_ING_NO_RENT.amount               #FILA 21
+
+pago_int_vivienda=inputs.RTFNTE_PAGO_INT_VIVENDA.amount  #FILA 26
+if pago_int_vivienda>100*UVT: pago_int_vivienda=100*UVT
+pagos_por_dependientes=inputs.RTFNTE_PAGOS_DEPENDIENTES.amount             #FILA 27
+if pagos_por_dependientes>32*UVT: pagos_por_dependientes=32*UVT
+pagos_med_prepagada=inputs.RTFNTE_PAGOS_MED_PREPAG.amount     #FILA 28
+if pagos_med_prepagada>16*UVT: pagos_med_prepagada=16*UVT
+aportes_pens_vol=inputs.RTFNTE_APORTES_PENS_VOLNT.amount        #FILA 33 lo debe limitar el contador con suma anual
+aportes_AFC=inputs.RTFNTE_APORTES_AFC.amount      #FILA 34 lo debe limitar el contado con suma anual
+otras_rentas_exentas=inputs.RTFNTE_OTRAS_RENTAS_EXENTAS.amount      #FILA 35
+#-----------------------------------------------------------------------------------------
+
+#------RETENCIÓN RENTAS DE TRABAJO---------------------
+base_salarial=categories.BASICO
+bonificacion_no_sal=0
+if rules.SALARIO_NOPREST: bonificacion_no_sal= bonificacion_no_sal +SALARIO_NOPREST
+if rules.	PAGO_NO_SALARIAL: bonificacion_no_sal= bonificacion_no_sal +PAGO_NO_SALARIAL
+ingresos_laborales=base_salarial + incentivo_vivienda + bonificacion_no_sal
+
+if aportes_vol_pensi_obl >ingresos_laborales*0.25: aportes_vol_pensi_obl =ingresos_laborales*0.25
+
+#----INGRESOS NO CONSTITUTIVOS DE RENTA----------
+total_ingresos_no_const=0
+if rules.DESC_SALUD: total_ingresos_no_const=total_ingresos_no_const -DESC_SALUD
+if rules.DESC_PENSION: total_ingresos_no_const=total_ingresos_no_const -DESC_PENSION
+if rules.FONDO_SOL: total_ingresos_no_const=total_ingresos_no_const -FONDO_SOL
+total_ingresos_no_const= total_ingresos_no_const +aportes_vol_pensi_obl + otros_ing_no_rent
+subtotal_1 =round(ingresos_laborales - total_ingresos_no_const,-3)
+
+#------DEDUCCIONES---------------------------------------------------
+total_deducciones =pago_int_vivienda + pagos_por_dependientes + pagos_med_prepagada
+subtotal_2 = subtotal_1 - total_deducciones
+
+#-------RENTAS EXENTAS-----------------------------------------------
+total_rentas_exentas=aportes_pens_vol + aportes_AFC + otras_rentas_exentas
+subtotal_3= subtotal_2 - total_rentas_exentas
+
+#--------RENTA DE TRABAJO EXENTA MAX 25%--------------
+renta_trab_exenta_25= round(subtotal_3*0.25,-3)
+if renta_trab_exenta_25>240*UVT: renta_trab_exenta_25=240*UVT
+subtotal_4=subtotal_3 - renta_trab_exenta_25
+
+#---------MINIMOS DEDUCCIONES -------------------------
+cifra_control_40 = round(subtotal_1*0.4,-3)
+deducciones_acum= total_deducciones + total_rentas_exentas + renta_trab_exenta_25
+max_deduc_420uvt= round(420*UVT,-3)
+
+#---------INGRESO SALBORAL BASE PARA RETEFUENTE ------
+ing_base_refuente = subtotal_1 - min(cifra_control_40,deducciones_acum,max_deduc_420uvt)
+ingreso_gravado_uvt = ing_base_refuente / UVT
+
+#---------------------CALCULO RETEFUENTE------------------------------
+if ingreso_gravado_uvt &lt; 95:
+ retefuente=0
+elif ingreso_gravado_uvt > 95 and ingreso_gravado_uvt &lt;= 150:
+ retefuente=round((ingreso_gravado_uvt-95)*0.19*UVT,-3)
+elif ingreso_gravado_uvt > 150 and ingreso_gravado_uvt &lt;= 360:
+ retefuente=round((ingreso_gravado_uvt-150)*0.28*UVT + 10*UVT,-3)
+elif ingreso_gravado_uvt > 360 and ingreso_gravado_uvt &lt;= 640:
+ retefuente=round((ingreso_gravado_uvt-360)*0.33*UVT + 69*UVT,-3)
+elif ingreso_gravado_uvt > 640 and ingreso_gravado_uvt &lt;= 945:
+ retefuente=round((ingreso_gravado_uvt-640)*0.35*UVT + 162*UVT,-3)
+elif ingreso_gravado_uvt > 945 and ingreso_gravado_uvt &lt;= 2300:
+ retefuente=round((ingreso_gravado_uvt-945)*0.37*UVT + 268*UVT,-3)
+elif ingreso_gravado_uvt > 2300:
+ retefuente=round((ingreso_gravado_uvt-2300)*0.39*UVT + 773*UVT,-3)
+
+
+retefuente= -1*retefuente
+result=retefuente
+
+if inputs.RETEFUENTE_MAN.amount>0:
+ result=-1*inputs.RETEFUENTE_MAN.amount
+        </field>
+    </record>
+
+
+    <record id="hr_salary_rule_liq_cesantias" model="hr.salary.rule">
+        <field name="name">LIQ CESANTIAS</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_liquidacion"/>
+        <field name="code">LIQ_CESANTIAS</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="49"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+salario_prom_cesant = inputs.SALARIO_PROM_LIQ_CESANT.amount
+dias_liq_cesant =  inputs.DIAS_LIQ_CESANT.amount
+result = salario_prom_cesant*dias_liq_cesant/360
+        </field>
+    </record>
+
+
+    <record id="hr_salary_rule_liq_int_cesantias" model="hr.salary.rule">
+        <field name="name">LIQ INT CESANT</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_liquidacion"/>
+        <field name="code">LIQ_INT_CESANT</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="50"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+dias_liq_cesant =  inputs.DIAS_LIQ_CESANT.amount
+result = 0.12*LIQ_CESANTIAS*dias_liq_cesant/360
+        </field>
+    </record>
+
+
+    <record id="hr_salary_rule_liq_vacaciones" model="hr.salary.rule">
+        <field name="name">LIQ VACACIONEST</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_liquidacion"/>
+        <field name="code">LIQ_VACACIONES</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="51"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+vac= inputs.DIAS_COT_VAC.amount*15/360
+vac = vac - inputs.DIAS_VAC_DISFRUT.amount
+result = SALARIO_BASE*vac/30
+        </field>
+    </record>
+
+
+    <record id="hr_salary_rule_liq_prima" model="hr.salary.rule">
+        <field name="name">LIQ PRIMA</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_liquidacion"/>
+        <field name="code">LIQ_PRIMA</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="52"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+dias_prima=inputs.DIAS_COT_PRIMA.amount
+salario_prima = inputs.SALARIO_PROM_PRIMA.amount
+result = salario_prima*dias_prima/360
+        </field>
+    </record>
+
+
+    <record id="hr_salary_rule_liq_neto_pagar" model="hr.salary.rule">
+        <field name="name">LIQ NETO A PAGAR</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll.alfa_amb_hr_pay_roll_category_neto_liq"/>
+        <field name="code">LIQ_NETO_A_PAGAR</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="sequence" eval="53"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = categories.LIQUIDACION
+        </field>
+    </record>
+
+
+
+    <record id="hr_salary_rule_prima_semestral" model="hr.salary.rule">
+        <field name="name">PRIMA SEMESTRAL</field>
+        <field name="category_id" ref="alfa_amb_hr_pay_roll_category_no_salary"/>
+        <field name="code">PRIMA_SEMESTRAL</field>
+        <field name="active" eval="True"/>
+        <field name="sum_on_payroll" eval="True"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="sequence" eval="26"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="where_takes_analytical_account">contract</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+dias_prima=inputs.DIAS_COT_PRIMA_SEMESTRAL.amount
+salario_prima = inputs.SALARIO_PROM_PRIMA_SEMESTRAL.amount
+result = salario_prima*dias_prima/360
+        </field>
+    </record>
+
+
+</data>
+</odoo>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+<data noupdate='1'>
+    <record id="hr_payroll.DED" model="hr.salary.rule.category">
+        <field name="name">DEDUCCIONES</field>
+        <field name="code">DEDUCCIONES</field>
+    </record>
+</data>
+
+<data noupdate="1">
+
+    <record id="alfa_amb_hr_pay_roll_category_no_salary" model="hr.salary.rule.category">
+        <field name="name">NO SALARIAL</field>
+        <field name="code">NO_SALARIAL</field>
+    </record>
+
+    <record id="alfa_amb_hr_pay_roll_category_calculations" model="hr.salary.rule.category">
+        <field name="name">CALCULOS</field>
+        <field name="code">CALCULOS</field>
+    </record>
+
+    <record id="alfa_amb_hr_pay_roll_category_constants" model="hr.salary.rule.category">
+        <field name="name">CONSTANTES</field>
+        <field name="code">CONSTANTES</field>
+    </record>
+
+    <record id="alfa_amb_hr_pay_roll_category_additional" model="hr.salary.rule.category">
+        <field name="name">SUPLEMENTARIO</field>
+        <field name="code">SUPL</field>
+    </record>
+
+    <record id="alfa_amb_hr_pay_roll_category_salary_base" model="hr.salary.rule.category">
+        <field name="name">BASE SALARIAL</field>
+        <field name="code">BASE_SALARIAL</field>
+    </record>
+
+    <record id="alfa_amb_hr_pay_roll_category_days_news" model="hr.salary.rule.category">
+        <field name="name">DIAS NOVEDADES</field>
+        <field name="code">DIAS_NOVEDADES</field>
+    </record>
+
+    <record id="alfa_amb_hr_pay_roll_category_provisions_ssi" model="hr.salary.rule.category">
+        <field name="name">PROVISIONES SSI</field>
+        <field name="code">PROVISIONES_SSI</field>
+    </record>
+
+    <record id="alfa_amb_hr_pay_roll_category_provisions_prest" model="hr.salary.rule.category">
+        <field name="name">PROVISIONES PREST</field>
+        <field name="code">PROVISIONES_PREST</field>
+    </record>
+
+    <record id="alfa_amb_hr_pay_roll_category_liquidacion" model="hr.salary.rule.category">
+        <field name="name">LIQUIDACION</field>
+        <field name="code">LIQUIDACION</field>
+    </record>
+    
+    <record id="alfa_amb_hr_pay_roll_category_neto_liq" model="hr.salary.rule.category">
+        <field name="name">NETO LIQ</field>
+        <field name="code">NETO_LIQ</field>
+    </record>
+
+</data>
+</odoo>

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<data noupdate="1">
+    <record id="hr_rule_input_vacation_days" model="hr.rule.input">
+        <field name="name">DIAS VACACIONES</field>
+        <field name="code">DIAS_VACACIONES</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_dias_vacaciones"/>
+    </record>
+
+    <record id="hr_rule_input_incap_gen_days" model="hr.rule.input">
+        <field name="name">DIAS INCAP GEN</field>
+        <field name="code">DIAS_IGEN</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_dias_incap_gen"/>
+    </record>
+
+    <record id="hr_rule_input_inclab_days" model="hr.rule.input">
+        <field name="name">DIAS INCAP LAB</field>
+        <field name="code">DIAS_INCLAB</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_dias_inclab"/>
+    </record>
+
+    <record id="hr_rule_input_lic_mat_days" model="hr.rule.input">
+        <field name="name">DIAS LICENCIA MAT</field>
+        <field name="code">DIAS_LIC_MAT</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_dias_lic_mat"/>
+    </record>
+
+    <record id="hr_rule_input_lic_rem_days" model="hr.rule.input">
+        <field name="name">DIAS LICENCIA REM</field>
+        <field name="code">DIAS_LIC_REM</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_dias_lic_rem"/>
+    </record>
+
+    <record id="hr_rule_input_lic_no_rem_days" model="hr.rule.input">
+        <field name="name">DIAS LICENCIA NO REM</field>
+        <field name="code">DIAS_LIC_NO_REM</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_dias_lic_no_rem"/>
+    </record>
+
+    <record id="hr_rule_input_ausent_no_just_days" model="hr.rule.input">
+        <field name="name">DIAS AUSENCIA NO JUST</field>
+        <field name="code">DIAS_AUSEN_NO_JUST</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_dias_ausen_no_just"/>
+    </record>
+
+    <record id="hr_rule_input_dia_ingreso" model="hr.rule.input">
+        <field name="name">DIA DE INGRESO</field>
+        <field name="code">DIA_DE_INGRESO</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_dias_ingreso"/>
+    </record>
+
+    <record id="hr_rule_input_dia_retiro" model="hr.rule.input">
+        <field name="name">DIA DE RETIRO</field>
+        <field name="code">DIA_DE_RETIRO</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_dia_retiro"/>
+    </record>
+
+    <record id="hr_rule_input_hed" model="hr.rule.input">
+        <field name="name">HORAS EXTRAS DIURNAS</field>
+        <field name="code">HED</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_h_extra"/>
+    </record>
+
+    <record id="hr_rule_input_hen" model="hr.rule.input">
+        <field name="name">HORAS EXTRAS NOCTURNAS</field>
+        <field name="code">HEN</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_h_extra"/>
+    </record>
+
+    <record id="hr_rule_input_hedf" model="hr.rule.input">
+        <field name="name">HORAS EXTRAS FESTIVO</field>
+        <field name="code">HEDF</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_h_extra"/>
+    </record>
+
+    <record id="hr_rule_input_henf" model="hr.rule.input">
+        <field name="name">HORAS EXTRAS NOCT FEST</field>
+        <field name="code">HENF</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_h_extra"/>
+    </record>
+
+    <record id="hr_rule_input_hrn" model="hr.rule.input">
+        <field name="name">HORAS RECARGO NOCTURNO</field>
+        <field name="code">HRN</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_h_extra"/>
+    </record>
+
+    <record id="hr_rule_input_hrf" model="hr.rule.input">
+        <field name="name">HORAS RECARGO FEST</field>
+        <field name="code">HRF</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_h_extra"/>
+    </record>
+
+    <record id="hr_rule_input_hrfn" model="hr.rule.input">
+        <field name="name">HORAS RECARGO FEST NOCT</field>
+        <field name="code">HRFN</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_h_extra"/>
+    </record>
+
+    <record id="hr_rule_input_comisiones" model="hr.rule.input">
+        <field name="name">COMISIONES</field>
+        <field name="code">COMISIONES</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_incentive_commissions"/>
+    </record>
+
+    <record id="hr_rule_input_pago_no_salarial" model="hr.rule.input">
+        <field name="name">PAGO NO SALARIAL</field>
+        <field name="code">PAGO_NO_SALARIAL</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_non_salary_payment"/>
+    </record>
+
+    <record id="hr_rule_input_rtfnte_ap_vol_pens_obl" model="hr.rule.input">
+        <field name="name">RTEFNTE - APORES VOL TRABAJ PENS OBL</field>
+        <field name="code">RTFNTE_AP_VOL_PENS_OBL</field>
+        <field name="apply_retefunte" eval="True"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_retefuente_calc"/>
+    </record>
+
+    <record id="hr_rule_input_rtfnte_otr_ing_no_rent" model="hr.rule.input">
+        <field name="name">RTEFNTE - OTROS ING NO CONST RENTA</field>
+        <field name="code">RTFNTE_OTR_ING_NO_RENT</field>
+        <field name="apply_retefunte" eval="True"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_retefuente_calc"/>
+    </record>
+
+    <record id="hr_rule_input_rtfnte_pago_int_vivenda" model="hr.rule.input">
+        <field name="name">RTEFNTE - PAGO INTER VIVIENDA</field>
+        <field name="code">RTFNTE_PAGO_INT_VIVENDA</field>
+        <field name="apply_retefunte" eval="True"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_retefuente_calc"/>
+    </record>
+
+    <record id="hr_rule_input_rtfnte_pagos_dependientes" model="hr.rule.input">
+        <field name="name">RTEFNTE - PAGOS POR DEPENDIENTES</field>
+        <field name="code">RTFNTE_PAGOS_DEPENDIENTES</field>
+        <field name="apply_retefunte" eval="True"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_retefuente_calc"/>
+    </record>
+
+    <record id="hr_rule_input_rtfnte_pagos_med_prepag" model="hr.rule.input">
+        <field name="name">RTEFNTE - PAGOS MED PREPAGADA</field>
+        <field name="code">RTFNTE_PAGOS_MED_PREPAG</field>
+        <field name="apply_retefunte" eval="True"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_retefuente_calc"/>
+    </record>
+
+    <record id="hr_rule_input_rtfnte_aportes_pens_volnt" model="hr.rule.input">
+        <field name="name">RTEFNTE - PAGOS PENSIONES VOLUNT</field>
+        <field name="code">RTFNTE_APORTES_PENS_VOLNT</field>
+        <field name="apply_retefunte" eval="True"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_retefuente_calc"/>
+    </record>
+
+    <record id="hr_rule_input_rtfnte_aportes_afc" model="hr.rule.input">
+        <field name="name">RTEFNTE - APORTES CUENTAS AFC</field>
+        <field name="code">RTFNTE_APORTES_AFC</field>
+        <field name="apply_retefunte" eval="True"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_retefuente_calc"/>
+    </record>
+
+    <record id="hr_rule_input_rtfnte_otras_rentas_exentas" model="hr.rule.input">
+        <field name="name">RTEFNTE - OTRAS RENTAS EXENTAS</field>
+        <field name="code">RTFNTE_OTRAS_RENTAS_EXENTAS</field>
+        <field name="apply_retefunte" eval="True"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_retefuente_calc"/>
+    </record>
+
+    <record id="hr_rule_input_retefuente_man" model="hr.rule.input">
+        <field name="name">RTEFNTE - RETEFUENTE CALCULO MANUAL</field>
+        <field name="code">RETEFUENTE_MAN</field>
+        <field name="apply_retefunte" eval="True"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_retefuente_calc"/>
+    </record>
+
+    <record id="hr_rule_input_reembolso" model="hr.rule.input">
+        <field name="name">REEMBOLSO</field>
+        <field name="code">REEMBOLSO</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_reembolso"/>
+    </record>
+
+    <record id="hr_rule_input_desc_prestamo" model="hr.rule.input">
+        <field name="name">DESC PRESTAMO</field>
+        <field name="code">DESC_PRESTAMO</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_desc_loan"/>
+    </record>
+
+    <record id="hr_rule_input_dia_liq_cesantias" model="hr.rule.input">
+        <field name="name">DIA LIQ CESANTIAS</field>
+        <field name="code">DIAS_LIQ_CESANT</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_liq_cesantias"/>
+    </record>
+
+    <record id="hr_rule_input_salario_prom_liq_cesant" model="hr.rule.input">
+        <field name="name">SALARIO PROM CESANT</field>
+        <field name="code">SALARIO_PROM_LIQ_CESANT</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_liq_cesantias"/>
+    </record>
+
+
+    <record id="hr_rule_input_dias_cot_vac" model="hr.rule.input">
+        <field name="name">DIAS COT VACACIONES</field>
+        <field name="code">DIAS_COT_VAC</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_liq_vacaciones"/>
+    </record>
+
+    <record id="hr_rule_input_dias_vac_disfrut" model="hr.rule.input">
+        <field name="name">DIAS VAC DISFRUTADAS</field>
+        <field name="code">DIAS_VAC_DISFRUT</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_liq_vacaciones"/>
+    </record>
+
+    <record id="hr_rule_input_dias_cot_prima" model="hr.rule.input">
+        <field name="name">DIAS COT PRIMA</field>
+        <field name="code">DIAS_COT_PRIMA</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_liq_prima"/>
+    </record>
+
+    <record id="hr_rule_input_salario_prom_prima" model="hr.rule.input">
+        <field name="name">SALARIO PROM PRIMA</field>
+        <field name="code">SALARIO_PROM_PRIMA</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_liq_prima"/>
+    </record>
+
+    <record id="hr_rule_input_dias_cot_prima_semestral" model="hr.rule.input">
+        <field name="name">DIAS COT PRIMA SEMESTRAL</field>
+        <field name="code">DIAS_COT_PRIMA_SEMESTRAL</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="False"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_prima_semestral"/>
+    </record>
+
+    <record id="hr_rule_input_salario_prom_prima_semestral" model="hr.rule.input">
+        <field name="name">SALARIO PROM PRIMA SEMESTRAL</field>
+        <field name="code">SALARIO_PROM_PRIMA_SEMESTRAL</field>
+        <field name="apply_retefunte" eval="False"/>
+        <field name="is_monetary" eval="True"/>
+        <field name="input_id" ref="alfa_amb_hr_pay_roll.hr_salary_rule_prima_semestral"/>
+    </record>
+
+</data>
+</odoo>

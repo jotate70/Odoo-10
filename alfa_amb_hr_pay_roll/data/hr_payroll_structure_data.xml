@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="hr_payroll_salary_structure_base" model="hr.payroll.structure">
+            <field name="code">Base for new structures</field>
+            <field name="name">BASE</field>
+            <field eval="[(6, 0, [
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_salary'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_net'),
+            ])]" name="rule_ids" />
+            <field name="company_id" ref="base.main_company" />
+        </record>
+
+        <record id="hr_payroll_salary_structure_base_o" model="hr.payroll.structure">
+            <field name="code">Estructura salarial_0</field>
+            <field name="name">BASE_0</field>
+            <field eval="[(6, 0, [
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_salary'),
+                ref('hr_payroll.hr_rule_taxable'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_net'),
+            ])]" name="rule_ids" />
+            <field name="company_id" ref="base.main_company" />
+        </record>
+
+        <record id="hr_payroll_salary_structure_estr_sal_1" model="hr.payroll.structure">
+            <field name="code">ESTR SALARIAL ADMIN</field>
+            <field name="name">ESTR_SAL_1</field>
+            <field eval="[(6, 0, [
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_salary'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_net'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_non_salary_payment'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_desc_loan'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_transp_aid'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_mimimin_salary'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_incentive_commissions'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_health_desc_4'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_desc_pension'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_fondo_sol'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_h_extra'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_base_sal'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_sueldo'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_vacaciones'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_incap_gen'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_inclab'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_lic_mat'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_lic_rem'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_lic_no_rem'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_ausen_no_just'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_vacaciones'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_igen'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_lic_rem'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_inclab'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_lic_mat'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_salario_noprest'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_eps'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_afp'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_ccf'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_arl'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_cesant'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_int_cesant'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_prima'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_vac'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_salario_base'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_sena'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_icbf'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_ingreso'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dia_retiro'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_nomina'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_reembolso'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_costo_total'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_uvt'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_retefuente_calc'),
+            ])]" name="rule_ids" />
+            <field name="company_id" ref="base.main_company" />
+        </record>
+
+        <record id="hr_payroll_salary_structure_aprendiz_sena_admin" model="hr.payroll.structure">
+            <field name="code">Aprediz SENA ADMIN</field>
+            <field name="name">ESTR_SAL_APR_SENA</field>
+            <field eval="[(6, 0, [
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_salary'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_net'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_non_salary_payment'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_desc_loan'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_transp_aid'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_mimimin_salary'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_incentive_commissions'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_base_sal'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_sueldo'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_vacaciones'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_incap_gen'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_inclab'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_lic_mat'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_lic_rem'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_lic_no_rem'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_ausen_no_just'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_vacaciones'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_igen'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_lic_rem'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_inclab'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_lic_mat'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_salario_noprest'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_arl'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_salario_base'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_ingreso'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dia_retiro'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_provision_eps_aprendiz_sena'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_nomina'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_costo_total'),
+            ])]" name="rule_ids" />
+            <field name="company_id" ref="base.main_company" />
+        </record>
+
+        <record id="hr_payroll_salary_structure_estr_sal_ventas" model="hr.payroll.structure">
+            <field name="code">ESTR SALARIAL VENTAS</field>
+            <field name="name">ESTR_SAL_VENTAS</field>
+            <field eval="[(6, 0, [
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_salary'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_net'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_non_salary_payment'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_desc_loan'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_transp_aid'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_mimimin_salary'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_incentive_commissions'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_health_desc_4'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_desc_pension'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_fondo_sol'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_h_extra'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_base_sal'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_sueldo'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_vacaciones'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_incap_gen'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_inclab'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_lic_mat'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_lic_rem'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_lic_no_rem'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_ausen_no_just'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_vacaciones'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_igen'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_lic_rem'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_inclab'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_lic_mat'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_salario_noprest'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_eps'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_afp'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_ccf'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_arl'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_cesant'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_int_cesant'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_prima'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_vac'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_salario_base'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_sena'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_icbf'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_ingreso'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dia_retiro'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_nomina'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_reembolso'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_costo_total'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_uvt'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_retefuente_calc'),
+            ])]" name="rule_ids" />
+            <field name="company_id" ref="base.main_company" />
+        </record>
+
+        <record id="hr_payroll_salary_structure_estr_sal_planta" model="hr.payroll.structure">
+            <field name="code">ESTR SALARIAL PLANTA</field>
+            <field name="name">ESTR_SAL_PLANTA</field>
+            <field eval="[(6, 0, [
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_salary'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_net'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_non_salary_payment'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_desc_loan'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_transp_aid'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_mimimin_salary'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_incentive_commissions'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_health_desc_4'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_desc_pension'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_fondo_sol'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_h_extra'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_base_sal'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_sueldo'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_vacaciones'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_incap_gen'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_inclab'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_lic_mat'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_lic_rem'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_lic_no_rem'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_ausen_no_just'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_vacaciones'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_igen'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_lic_rem'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_inclab'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_ing_lic_mat'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_salario_noprest'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_eps'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_afp'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_ccf'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_arl'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_cesant'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_int_cesant'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_prima'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_vac'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_salario_base'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_sena'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_provision_icbf'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_ingreso'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dia_retiro'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_dias_nomina'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_reembolso'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_costo_total'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_uvt'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_retefuente_calc'),
+            ])]" name="rule_ids" />
+            <field name="company_id" ref="base.main_company" />
+        </record>
+
+
+
+        <record id="hr_payroll_salary_structure_estr_sal_planta" model="hr.payroll.structure">
+            <field name="code">LIQ</field>
+            <field name="name">LIQUIDACION</field>
+            <field name="parent_id" ref = 'hr_payroll.structure_base'/>
+            <field eval="[(6, 0, [
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_salario_base'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_liq_cesantias'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_liq_int_cesantias'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_liq_vacaciones'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_liq_prima'),
+                ref('alfa_amb_hr_pay_roll.hr_salary_rule_liq_neto_pagar'),
+            ])]" name="rule_ids" />
+            <field name="company_id" ref="base.main_company" />
+        </record>
+
+
+
+    </data>
+</odoo>
